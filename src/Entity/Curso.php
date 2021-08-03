@@ -1,6 +1,7 @@
 <?php
 
 namespace Alura\Cursos\Entity;
+use Doctrine\ORM\Mapping\{Column, Entity, GeneratedValue, Id, Table};
 
 /**
  * @Entity
