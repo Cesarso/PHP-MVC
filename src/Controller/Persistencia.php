@@ -6,6 +6,7 @@ namespace Alura\Cursos\Controller;
 
 use Alura\Cursos\Entity\Curso;
 use Alura\Cursos\Infra\EntityManagerCreator;
+use Doctrine\Persistence\ObjectManager;
 
 
 class Persistencia implements InterfaceControladorRequisicao
@@ -33,16 +34,31 @@ class Persistencia implements InterfaceControladorRequisicao
             FILTER_SANITIZE_STRING
         );
 
+        $curso = new Curso();
+        $curso->setDescricao($descricao);
+        $id = filter_input(
+            INPUT_GET,
+            'id',
+            FILTER_VALIDATE_INT
+        );
+
+
+        if (!is_null($id) && $id !== false){
+            $curso->setId($id);
+            $this->entityManager->merge($curso);
+        } else{
+            $this->entityManager->persist($curso);
+        }
+        $this->entityManager->flush();
+
         //pegar dados do form;
         //montar modelo Curso;
         //Inserir no banco;
 
         //pegar na url post
         //$descricao = $_POST['descricao']
-        $curso = new Curso();
-        $curso->setDescricao($descricao);
-        $this->entityManager->persist($curso);
-        $this->entityManager->flush();
+
+
 
         header('Location: /listar-cursos', true, 302);
     }
