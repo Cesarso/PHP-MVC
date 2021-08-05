@@ -31,7 +31,11 @@ class RealizarLogin implements InterfaceControladorRequisicao
         FILTER_VALIDATE_EMAIL
     );
         if (is_null($email) || $email === false){
-            echo "O Email digitado não é um e-mail válido.";
+            //entra mensagem de erro
+            $_SESSION['tipo_mensagem'] = 'danger';
+            $_SESSION['mensagem'] = "O Email digitado não é um e-mail válido.";
+            //redirecionar o usuario de volta:
+            header('Location: /login');
             return;
         }
 
@@ -46,10 +50,16 @@ class RealizarLogin implements InterfaceControladorRequisicao
 
         /** @var Usuario $usuario */
         if (is_null($usuario) || $usuario->senhaEstaCorreta($senha)){
-            echo "E-mail ou senha inválidos";
+            $_SESSION['tipo_mensagem'] = 'danger';
+            $_SESSION['mensagem'] = "E-mail ou senha inválidos";
+            header('Location: /login');
             return;
         }
+
+        $_SESSION['logado'] = true;
         header('Location: /listar-cursos');
 
     }
+
+
 }

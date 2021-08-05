@@ -42,13 +42,17 @@ class Persistencia implements InterfaceControladorRequisicao
             FILTER_VALIDATE_INT
         );
 
-
-        if (!is_null($id) && $id !== false){
+        $tipo = 'success';
+        if (!is_null($id) && $id !== false) {
             $curso->setId($id);
             $this->entityManager->merge($curso);
-        } else{
+            $_SESSION['mensagem']= 'Curso atualizado com sucesso';
+        } else {
             $this->entityManager->persist($curso);
+            $_SESSION['mensagem']= 'Curso inserido com sucesso';
         }
+        $_SESSION['tipo_mensagem'] = 'success';
+
         $this->entityManager->flush();
 
         //pegar dados do form;
