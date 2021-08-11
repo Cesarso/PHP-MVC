@@ -30,15 +30,15 @@ class CursosEmXml implements RequestHandlerInterface
     {
         /** @var Curso[] $curso */
         $cursos = $this->repositorioDeCursos->findAll();
-        $cursoEmXml = new \SimpleXMLElement('<curso/>');
+        $cursosEmXml = new \SimpleXMLElement('<curso/>');
 
         foreach ($cursos as $curso){
-            $cursoEmXml->$cursosEmXml-addChild('curso');
+            $cursoEmXml = $cursosEmXml->addChild('curso');
             $cursoEmXml->addChild('id',$curso->getId());
-            $cursoEmXml->addChild('descricao', $curso-> getDescricao);
+            $cursoEmXml->addChild('descricao', $curso-> getDescricao());
         }
         return new Response(200,
-            ['Content-Type'=>application/xml],
+            ['Content-Type'=>'application/xml'],
             $cursosEmXml->asXML()
     );
 
